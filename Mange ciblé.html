@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mange ciblé – que manger selon ton objectif</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=Literata:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef3f0;--card:#fff;--ink:#17302b;--mute:#566b65;--ac:#2f6f5e;--ac2:#e0a84a;--line:#c9d8d2;--chip:#dfeae5;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1b18;--card:#172622;--ink:#e6f0ec;--mute:#9db3ab;--ac:#6fc2a9;--ac2:#e0a84a;--line:#2b403a;--chip:#1f332d}}
+:root[data-theme="dark"]{--bg:#0f1b18;--card:#172622;--ink:#e6f0ec;--mute:#9db3ab;--ac:#6fc2a9;--ac2:#e0a84a;--line:#2b403a;--chip:#1f332d}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 Literata,Georgia,serif}
+.w{max-width:860px;margin:0 auto;padding:28px 18px 60px}
+h1,h2,h3,.f{font-family:"Bricolage Grotesque",system-ui,sans-serif}
+h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.05;margin:.2em 0 .3em;letter-spacing:-.02em}
+.lead{color:var(--mute);max-width:56ch;margin:0 0 28px}
+h2{font-size:1.15rem;margin:30px 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+button.c{font:500 .95rem "Bricolage Grotesque",system-ui,sans-serif;background:var(--chip);color:var(--ink);border:1.5px solid transparent;border-radius:999px;padding:9px 16px;cursor:pointer}
+button.c[aria-pressed="true"]{background:var(--ac);color:#fff}
+button.c:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--ac2);outline-offset:2px}
+.hint{background:var(--card);border-left:4px solid var(--ac2);padding:12px 16px;border-radius:4px;margin-top:12px;color:var(--mute);font-size:.95rem}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+label{display:block;font:500 .85rem "Bricolage Grotesque",system-ui,sans-serif;color:var(--mute);margin-bottom:4px}
+select{width:100%;padding:10px;border-radius:8px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:.95rem}
+.res{margin-top:30px}
+details{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:10px 0;padding:0}
+summary{cursor:pointer;padding:14px 16px;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary b{font:700 1.1rem "Bricolage Grotesque",system-ui,sans-serif}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.t{font:500 .75rem "Bricolage Grotesque",sans-serif;padding:2px 9px;border-radius:999px;background:var(--chip);color:var(--mute)}
+.t.w2{background:#f4e3c0;color:#5c4210}
+.ev{white-space:nowrap;font-size:.8rem;color:var(--mute)}
+.body{padding:0 16px 16px;border-top:1px dashed var(--line)}
+.body dt{font:700 .85rem "Bricolage Grotesque",sans-serif;color:var(--ac);margin-top:12px}
+.body dd{margin:2px 0 0}
+.empty{color:var(--mute);padding:20px 0}
+footer{margin-top:40px;font-size:.85rem;color:var(--mute);border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>Mange ciblé</h1>
+<p class="lead">Choisis ce que tu veux soutenir : récupération, blessure, cerveau, cycle… Tu obtiens ce que tu peux manger, comment le préparer et avec quoi le combiner.</p>
+
+<h2>1. Ton objectif</h2>
+<div class="chips" id="goals"></div>
+<div id="subsec" hidden><h2 id="subtitle">2. Précise</h2><div class="chips" id="subs"></div><div class="hint" id="subhint"></div></div>
+
+<h2>Ton contexte</h2>
+<div class="row">
+<div><label for="sex">Sexe</label><select id="sex"><option value="">Non précisé</option><option value="f">Femme</option><option value="h">Homme</option></select></div>
+<div><label for="sea">Saison</label><select id="sea"><option value="">Toute l'année</option><option value="pr">Printemps</option><option value="et">Été</option><option value="au">Automne</option><option value="hi">Hiver</option></select></div>
+<div><label for="reg">Où vis-tu ?</label><select id="reg"><option value="">Partout</option><option value="eu">Europe</option><option value="na">Amérique du Nord</option><option value="sa">Amérique latine</option><option value="as">Asie</option><option value="af">Afrique</option><option value="oc">Océanie</option></select></div>
+<div id="tissWrap" hidden><label for="tis">Tissu touché</label><select id="tis"><option value="">Je ne sais pas</option><option value="muscle">Muscle</option><option value="tendon">Tendon / ligament</option><option value="os">Os</option></select></div>
+</div>
+
+<div class="res" id="res"><p class="empty">Choisis un objectif pour voir les aliments.</p></div>
+
+<footer>Prototype : la base contient une vingtaine d'aliments et reste à élargir. Les niveaux de preuve sont indicatifs et chaque fiche devra être reliée à ses études avant publication. Ce site ne remplace pas un avis médical ou diététique, surtout en cas de blessure, de grossesse ou de pathologie.</footer>
+</div>
+<script>
+const G={
+rec:{l:"Récupération après effort",s:{cardio:["Cardio / endurance","Priorité : réhydrater, recharger le glycogène (glucides), puis réparer le muscle."],force:["Force / musculation","Priorité : protéines (environ 0,3 g/kg) et glucides dans les heures qui suivent."]}},
+inj:{l:"Récupération après blessure",s:{inflam:["Phase 1 : inflammation (jours 0–5)","Gonflement, chaleur, douleur vive. Le corps nettoie la zone et mobilise ses cellules. Ne cherche pas à « éteindre » l'inflammation à tout prix : vise un bon équilibre."],prolif:["Phase 2 : reconstruction (≈ jours 3–21)","Le corps fabrique du nouveau tissu (collagène, vaisseaux). Besoin élevé en protéines, vitamine C et zinc. La douleur baisse, la zone reste fragile."],remod:["Phase 3 : remodelage (semaine 3 à plusieurs mois)","Le tissu se réorganise et se renforce quand on le sollicite. Tendons et os mettent plus longtemps que le muscle."]}},
+prep:{l:"Préparation à un effort",s:{endu:["Endurance","Priorité : glucides disponibles, nitrates, bonne hydratation, rien de lourd juste avant."],force:["Force / puissance","Priorité : énergie disponible, un peu de protéines, créatine et caféine déjà testées à l'entraînement."]}},
+brain:{l:"Cerveau",s:{mem:["Mémoire et concentration","Priorité : flavonoïdes, oméga-3, choline, apports réguliers plutôt que ponctuels."],rec:["Récupération mentale","Priorité : sommeil, magnésium, oméga-3, limiter les pics de sucre."]}},
+cyc:{l:"Cycle menstruel",s:{men:["Règles (jours 1–5)","Pertes de fer, parfois crampes et fatigue. Priorité : fer, vitamine C, magnésium."],fol:["Phase folliculaire","Énergie en hausse, bonne tolérance aux glucides et à l'effort. Priorité : protéines, fibres, fer à reconstituer."],ovu:["Ovulation","Pic d'énergie court. Priorité : hydratation, antioxydants, protéines."],lut:["Phase lutéale","Appétit et métabolisme un peu plus élevés, symptômes prémenstruels possibles. Priorité : glucides complexes, magnésium, régularité."]}}};
+const F=[
+{n:"Sardines, maquereau",g:["inj.inflam","brain.mem","brain.rec","rec.force","cyc.men"],w:"Oméga-3 EPA/DHA, vitamine D, protéines complètes.",h:"Cuisson douce (four, vapeur) ou en conserve. Manger les petites arêtes apporte du calcium.",c:"Citron et légumes verts ; la matière grasse du poisson aide l'absorption de la vitamine D.",e:3,r:[],s:[]},
+{n:"Œufs",g:["rec.force","inj.prolif","inj.remod","brain.mem","prep.force"],w:"Protéines très digestibles, leucine, choline (mémoire), zinc.",h:"Cuits : les protéines sont bien mieux digérées que crus.",c:"Légumes et glucides complexes pour un repas complet.",e:3,r:[],s:[]},
+{n:"Viande rouge maigre",g:["cyc.men","cyc.fol","prep.force","rec.force","inj.remod"],w:"Fer héminique (très bien absorbé), zinc, B12, créatine naturelle.",h:"Cuite à point sans carboniser.",c:"Ajouter de la vitamine C (poivron, citron) ; éviter thé et café pendant le repas.",e:3,r:[],s:[],x:"Les besoins en fer sont plus élevés chez les femmes réglées."},
+{n:"Lentilles et légumineuses",g:["cyc.men","cyc.fol","prep.endu","rec.cardio","cyc.lut"],w:"Glucides lents, fibres, protéines végétales, fer et folates.",h:"Toujours cuites ; un trempage réduit les composés qui gênent l'absorption des minéraux.",c:"Vitamine C (citron, poivron cru) pour absorber le fer non héminique ; céréales pour un profil protéique complet.",e:3,r:[],s:[],x:"Source de fer clé si tu manges peu de viande."},
+{n:"Betterave",g:["prep.endu","prep.force"],w:"Nitrates : améliorent l'efficacité de l'oxygène à l'effort, surtout en endurance.",h:"Jus ou cuite ; à consommer environ 2 à 3 h avant l'effort.",c:"Évite le bain de bouche antiseptique juste après : il réduit la conversion des nitrates.",e:3,r:["eu","na","as"],s:["au","hi"]},
+{n:"Épinards et feuilles vertes",g:["cyc.men","cyc.fol","brain.mem","prep.endu"],w:"Folates, magnésium, lutéine, nitrates.",h:"Crus pour les nitrates ; cuits à la vapeur pour réduire les oxalates qui freinent calcium et fer.",c:"Un filet d'huile pour la lutéine (liposoluble) et du citron pour le fer.",e:2,r:[],s:["pr","au","hi"]},
+{n:"Cerises acides (griottes)",g:["rec.cardio","rec.force","inj.inflam"],w:"Polyphénols anti-inflammatoires ; réduction de la douleur musculaire dans plusieurs essais.",h:"Jus sans sucre ajouté ou fruits ; apports sur quelques jours autour de l'effort.",c:"Avec un repas contenant des protéines.",e:2,r:["eu","na"],s:["et"]},
+{n:"Myrtilles",g:["brain.mem","rec.cardio","brain.rec"],w:"Flavonoïdes (anthocyanes) associés à de meilleures performances mémoire.",h:"Crues ou surgelées, même efficacité nutritionnelle.",c:"Yaourt ou flocons d'avoine.",e:2,r:["eu","na","sa","oc"],s:["et"]},
+{n:"Flocons d'avoine",g:["prep.endu","cyc.lut","rec.cardio"],w:"Glucides à libération lente, fibres bêta-glucanes.",h:"Cuits ou trempés ; 2 à 3 h avant l'effort.",c:"Banane, noix ou yaourt.",e:2,r:["eu","na","oc"],s:[]},
+{n:"Banane",g:["prep.endu","rec.cardio"],w:"Glucides rapides, potassium, facile à digérer.",h:"Mûre pour des sucres plus accessibles ; moins mûre pour plus d'amidon résistant.",c:"Source de protéines après l'effort.",e:2,r:["as","af","sa","oc","na","eu"],s:[]},
+{n:"Riz et patate douce",g:["rec.cardio","rec.force","prep.endu"],w:"Glucides pour recharger le glycogène après un effort long ou intense.",h:"Cuits ; refroidir puis réchauffer augmente l'amidon résistant.",c:"Environ 3 g de glucides pour 1 g de protéines après l'effort.",e:3,r:[],s:[]},
+{n:"Yaourt grec, skyr",g:["rec.force","inj.prolif","inj.remod"],w:"Protéines de lait (caséine et whey), calcium.",h:"Nature, sans sucre ajouté.",c:"Fruits rouges, noix.",e:2,r:["eu","na","oc"],s:[],t:["muscle","os"]},
+{n:"Tofu, tempeh",g:["rec.force","inj.prolif","cyc.fol"],w:"Protéines végétales complètes, calcium (si coagulé au sulfate de calcium), fer.",h:"Cuits ; le tempeh fermenté est mieux digéré.",c:"Associer à des céréales et des légumes verts.",e:2,r:[],s:[]},
+{n:"Agrumes, kiwi, poivron",g:["inj.prolif","cyc.men","inj.remod"],w:"Vitamine C : indispensable à la fabrication du collagène et à l'absorption du fer.",h:"Crus (la chaleur détruit une partie de la vitamine C).",c:"À mettre au même repas que des sources de fer végétales.",e:3,r:[],s:["au","hi"]},
+{n:"Bouillon d'os, gélatine",g:["inj.remod","inj.prolif"],w:"Glycine et proline, briques du collagène. Preuves encore limitées, surtout pour les tendons.",h:"Gélatine dissoute, 30 à 60 min avant une sollicitation de la zone.",c:"Avec de la vitamine C (jus d'orange par exemple).",e:1,r:[],s:["au","hi"],t:["tendon","os"]},
+{n:"Brocoli et crucifères",g:["inj.remod","inj.inflam","cyc.fol"],w:"Vitamine C et K, calcium, sulforaphane.",h:"Vapeur légère ; cru haché, attendre une quinzaine de minutes avant de cuire pour activer le sulforaphane.",c:"Un peu de moutarde crue relance l'enzyme si c'est trop cuit.",e:2,r:[],s:["au","hi","pr"],t:["os","muscle"]},
+{n:"Curcuma et poivre noir",g:["inj.inflam","rec.force"],w:"Curcumine, effet anti-inflammatoire modeste mais documenté.",h:"En cuisine, cuit avec de la matière grasse.",c:"Le poivre noir (pipérine) et le gras augmentent fortement l'absorption.",e:2,r:["as","eu","na","sa","af","oc"],s:[]},
+{n:"Gingembre",g:["cyc.men","rec.force"],w:"Peut soulager les crampes menstruelles et la douleur musculaire.",h:"Frais ou en infusion.",c:"Citron et miel en infusion chaude.",e:2,r:[],s:["hi"]},
+{n:"Noix",g:["brain.mem","brain.rec","cyc.lut"],w:"Oméga-3 ALA, polyphénols, magnésium.",h:"Crues ou légèrement grillées ; une poignée par jour.",c:"Fruits, yaourt.",e:2,r:["eu","na","as"],s:["au"]},
+{n:"Graines de courge",g:["cyc.lut","brain.rec","cyc.men"],w:"Magnésium et zinc, utiles contre la fatigue et les symptômes prémenstruels.",h:"Crues ou grillées à sec.",c:"Salades, porridge.",e:1,r:[],s:[]},
+{n:"Chocolat noir (≥ 70 %)",g:["brain.mem","cyc.lut"],w:"Flavanols (circulation cérébrale) et magnésium.",h:"20 à 30 g suffisent.",c:"Avec des noix pour un en-cas rassasiant.",e:2,r:[],s:[]},
+{n:"Café",g:["prep.endu","prep.force"],w:"Caféine : 3 à 6 mg/kg environ 60 min avant l'effort améliore la performance.",h:"Noir, sans gros apport de sucre.",c:"À tester à l'entraînement ; ne pas boire pendant le repas riche en fer.",e:3,r:[],s:[]},
+{n:"Thé vert, matcha",g:["brain.mem","brain.rec"],w:"L-théanine et caféine : attention soutenue avec moins de nervosité.",h:"Infusé 2 à 3 min à 80 °C.",c:"Éviter aux repas riches en fer.",e:2,r:["as","eu","na","oc"],s:[]}
+];
+const S={g:"",s:""};const $=id=>document.getElementById(id);
+const gEl=$("goals"),sEl=$("subs");
+function chip(box,label,on,fn){const b=document.createElement("button");b.className="c";b.textContent=label;b.setAttribute("aria-pressed",on);b.onclick=fn;box.appendChild(b)}
+function draw(){gEl.innerHTML="";for(const k in G)chip(gEl,G[k].l,S.g===k,()=>{S.g=k;S.s="";if(k==="cyc")$("sex").value="f";draw()});
+const sub=$("subsec");sub.hidden=!S.g;$("tissWrap").hidden=S.g!=="inj";sEl.innerHTML="";
+if(S.g){$("subtitle").textContent="2. Précise : "+G[S.g].l.toLowerCase();for(const k in G[S.g].s)chip(sEl,G[S.g].s[k][0],S.s===k,()=>{S.s=k;draw()});
+$("subhint").textContent=S.s?G[S.g].s[S.s][1]:"Choisis une option pour voir l'explication.";$("subhint").style.display="block"}
+render()}
+function render(){const R=$("res");if(!S.g||!S.s){R.innerHTML='<p class="empty">Choisis un objectif et une précision pour voir les aliments.</p>';return}
+const key=S.g+"."+S.s,sea=$("sea").value,reg=$("reg").value,tis=$("tis").value,sex=$("sex").value;
+let list=F.filter(f=>f.g.includes(key)).map(f=>{let sc=f.e;const out=f.s.length&&sea&&!f.s.includes(sea);const far=f.r.length&&reg&&!f.r.includes(reg);
+if(out)sc-=1.5;if(far)sc-=3;if(S.g==="inj"&&tis&&f.t&&f.t.includes(tis))sc+=1.5;if(S.g==="inj"&&tis&&f.t&&!f.t.includes(tis))sc-=1;return{f,sc,out,far}}).sort((a,b)=>b.sc-a.sc);
+if(!list.length){R.innerHTML='<p class="empty">Aucun aliment dans la base pour cette combinaison. La base est encore en construction.</p>';return}
+R.innerHTML="<h2>"+list.length+" aliments pour : "+G[S.g].s[S.s][0]+"</h2>"+list.map(({f,out,far},i)=>`<details${i<2?" open":""}><summary><div><b>${f.n}</b><div class="tags">${out?'<span class="t w2">hors saison : surgelé ou conserve</span>':""}${far?'<span class="t w2">peu accessible dans ta région</span>':""}</div></div><span class="ev" title="Niveau de preuve">preuve ${"●".repeat(f.e)+"○".repeat(3-f.e)}</span></summary><div class="body"><dl><dt>Pourquoi</dt><dd>${f.w}</dd><dt>Comment l'assimiler</dt><dd>${f.h}</dd><dt>À combiner avec</dt><dd>${f.c}</dd>${f.x&&sex==="f"?`<dt>Pour toi</dt><dd>${f.x}</dd>`:""}</dl></div></details>`).join("")}
+["sex","sea","reg","tis"].forEach(i=>$(i).onchange=render);draw();
+</script>
+</body>
+</html>
